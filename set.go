@@ -1,5 +1,10 @@
 package containers
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Set represents a generic set data structure that can store comparable values.
 type Set[T comparable] map[T]any
 
@@ -93,4 +98,13 @@ func (s Set[T]) IsSuperset(other Set[T]) bool {
 		}
 	}
 	return true
+}
+
+// Print returns a string representation of the Set.
+func (s Set[t]) Print() string {
+	items := make([]string, 0, len(s))
+	for item := range s {
+		items = append(items, fmt.Sprintf("%v", item))
+	}
+	return fmt.Sprintf("Set{%s}", strings.Join(items, ", "))
 }

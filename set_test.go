@@ -12,7 +12,7 @@ func TestNewSet(t *testing.T) {
 	}
 
 	// Test set with items
-	set := NewSet[int](1, 2, 3)
+	set := NewSet(1, 2, 3)
 	if set.Size() != 3 {
 		t.Error("NewSet(items...) should create a set with the given items")
 	}
@@ -33,7 +33,7 @@ func TestAdd(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	set := NewSet[int](1, 2, 3)
+	set := NewSet(1, 2, 3)
 	set.Remove(2)
 	if set.Contains(2) {
 		t.Error("Remove() should remove the item from the set")
@@ -49,7 +49,7 @@ func TestRemove(t *testing.T) {
 }
 
 func TestContains(t *testing.T) {
-	set := NewSet[int](1, 2, 3)
+	set := NewSet(1, 2, 3)
 	if !set.Contains(1) {
 		t.Error("Contains() should return true for existing items")
 	}
@@ -59,7 +59,7 @@ func TestContains(t *testing.T) {
 }
 
 func TestSize(t *testing.T) {
-	set := NewSet[int](1, 2, 3)
+	set := NewSet(1, 2, 3)
 	if set.Size() != 3 {
 		t.Error("Size() should return the correct number of items")
 	}
@@ -70,8 +70,8 @@ func TestSize(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	set1 := NewSet[int](1, 2, 3)
-	set2 := NewSet[int](3, 4, 5)
+	set1 := NewSet(1, 2, 3)
+	set2 := NewSet(3, 4, 5)
 	union := set1.Union(set2)
 
 	expected := NewSet[int](1, 2, 3, 4, 5)
@@ -86,8 +86,8 @@ func TestUnion(t *testing.T) {
 }
 
 func TestIntersection(t *testing.T) {
-	set1 := NewSet[int](1, 2, 3)
-	set2 := NewSet[int](3, 4, 5)
+	set1 := NewSet(1, 2, 3)
+	set2 := NewSet(3, 4, 5)
 	intersection := set1.Intersection(set2)
 
 	if intersection.Size() != 1 {
@@ -99,8 +99,8 @@ func TestIntersection(t *testing.T) {
 }
 
 func TestDifference(t *testing.T) {
-	set1 := NewSet[int](1, 2, 3)
-	set2 := NewSet[int](3, 4, 5)
+	set1 := NewSet(1, 2, 3)
+	set2 := NewSet(3, 4, 5)
 	difference := set1.Difference(set2)
 
 	if difference.Size() != 2 {
@@ -137,5 +137,34 @@ func TestIsSuperset(t *testing.T) {
 	}
 	if set1.IsSuperset(set3) {
 		t.Error("IsSuperset() should return false when items are not contained")
+	}
+}
+
+func TestPrint(t *testing.T) {
+	// Test empty set
+	emptySet := NewSet[int]()
+	if emptySet.Print() != "Set{}" {
+		t.Errorf("Print() for empty set should be 'Set{}', got '%s'", emptySet.Print())
+	}
+
+	// Test single item
+	singleSet := NewSet(1)
+	if singleSet.Print() != "Set{1}" {
+		t.Errorf("Print() for single item should be 'Set{1}', got '%s'", singleSet.Print())
+	}
+
+	// Test multiple items
+	// Note: Since maps don't guarantee order, we need to check for all possible valid outputs
+	multiSet := NewSet(1, 2)
+	result := multiSet.Print()
+	if result != "Set{1, 2}" && result != "Set{2, 1}" {
+		t.Errorf("Print() for multiple items should be either 'Set{1, 2}' or 'Set{2, 1}', got '%s'", result)
+	}
+
+	// Test with strings
+	strSet := NewSet("a", "b")
+	result = strSet.Print()
+	if result != "Set{a, b}" && result != "Set{b, a}" {
+		t.Errorf("Print() for strings should be either 'Set{a, b}' or 'Set{b, a}', got '%s'", result)
 	}
 }
