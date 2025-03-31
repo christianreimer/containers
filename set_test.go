@@ -143,27 +143,27 @@ func TestIsSuperset(t *testing.T) {
 func TestPrint(t *testing.T) {
 	// Test empty set
 	emptySet := NewSet[int]()
-	if emptySet.Print() != "Set{}" {
-		t.Errorf("Print() for empty set should be 'Set{}', got '%s'", emptySet.Print())
+	if emptySet.String() != "Set{}" {
+		t.Errorf("Print() for empty set should be 'Set{}', got '%s'", emptySet.String())
 	}
 
 	// Test single item
 	singleSet := NewSet(1)
-	if singleSet.Print() != "Set{1}" {
-		t.Errorf("Print() for single item should be 'Set{1}', got '%s'", singleSet.Print())
+	if singleSet.String() != "Set{1}" {
+		t.Errorf("Print() for single item should be 'Set{1}', got '%s'", singleSet.String())
 	}
 
 	// Test multiple items
 	// Note: Since maps don't guarantee order, we need to check for all possible valid outputs
 	multiSet := NewSet(1, 2)
-	result := multiSet.Print()
+	result := multiSet.String()
 	if result != "Set{1, 2}" && result != "Set{2, 1}" {
 		t.Errorf("Print() for multiple items should be either 'Set{1, 2}' or 'Set{2, 1}', got '%s'", result)
 	}
 
 	// Test with strings
 	strSet := NewSet("a", "b")
-	result = strSet.Print()
+	result = strSet.String()
 	if result != "Set{a, b}" && result != "Set{b, a}" {
 		t.Errorf("Print() for strings should be either 'Set{a, b}' or 'Set{b, a}', got '%s'", result)
 	}

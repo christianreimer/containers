@@ -100,8 +100,8 @@ func (s Set[T]) IsSuperset(other Set[T]) bool {
 	return true
 }
 
-// Print returns a string representation of the Set.
-func (s Set[t]) Print() string {
+// String returns a string representation of the Set.
+func (s Set[t]) String() string {
 	items := make([]string, 0, len(s))
 	for item := range s {
 		items = append(items, fmt.Sprintf("%v", item))
